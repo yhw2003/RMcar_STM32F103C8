@@ -29,7 +29,6 @@ void calculate()
 
 
 void counter() {
-
   roundCnt++;
 }
 
