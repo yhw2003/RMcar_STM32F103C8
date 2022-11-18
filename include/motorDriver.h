@@ -6,4 +6,7 @@ typedef struct _motorController
 } MotorController;
 
 
-void goFront();
+void goFront(MotorController ** motorController);
+void goBack(MotorController ** motorController);
+void turnRight(MotorController ** motorController);
+void turnLeft(MotorController ** motorController);
