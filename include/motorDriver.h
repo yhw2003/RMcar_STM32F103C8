@@ -8,5 +8,5 @@ typedef struct _motorController
 void motorInit(MotorController * motorController);
 void goFront(MotorController * motorController);
 void goBack(MotorController * motorController);
-void turnRight(MotorController * motorController);
-void turnLeft(MotorController * motorController);
+void turnRight(MotorController * motorController, int * degreeCnt);
+void turnLeft(MotorController * motorController, int * degreeCnt);

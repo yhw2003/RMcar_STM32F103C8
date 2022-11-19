@@ -18,6 +18,7 @@
 const double targetSpeed = 100;
 double realDutyCycle[4] = {0.6,0.6,0.6,0.6};
 int roundCnt[4] = {0};
+int degreeCnt = 0;
 double speed[4] = {0};
 STM32Timer ITimer(TIM1);
 STM32_ISR_Timer ISR_Timer;
@@ -100,7 +101,7 @@ void _RIGHT(){
   
 }
 void _STRAIGHT(){
-  
+  St = GO_STRAIGHT;
 }
 
 void TimerHandler()
@@ -132,9 +133,9 @@ void setup() {
   pinMode(sensor_RI_pin,OUTPUT);
   pinMode(sensor_RO_pin,OUTPUT);
   // attachInterrupt(sensor_LO_pin,counterLF,FALLING);
-  attachInterrupt(sensor_LI_pin,counterRF,FALLING);
+  attachInterrupt(sensor_LI_pin,_LEFT,FALLING);
   // attachInterrupt(sensor_MID_pin,counterLB,FALLING);
-  attachInterrupt(sensor_RI_pin,counterRB,FALLING);
+  attachInterrupt(sensor_RI_pin,_RIGHT,FALLING);
   // attachInterrupt(sensor_RO_pin,counterRB,FALLING);
 
 
@@ -163,11 +164,15 @@ void loop() {
   analogWrite(LB_E_pin,dutyCycle(realDutyCycle[LB]));
   analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
   }
+  if (St == TURN_RIGHT)
+  {
+    turnRight(motorController,&degreeCnt);
+    St = GO_STRAIGHT;
+  }
+  if (St == TURN_LEFT)
+  {
+    turnLeft(motorController,&degreeCnt);
+    St = GO_STRAIGHT;
+  }
   
-
-  /*
-  Other codes
-  */
-  
-  // timer.tick();
 }
