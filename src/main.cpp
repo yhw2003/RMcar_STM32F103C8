@@ -46,7 +46,9 @@ MotorController motorController[4] = {
 };
 enum status {
   TURN_LEFT, TURN_RIGHT, GO_STRAIGHT
-}
+};
+
+enum status St = GO_STRAIGHT;
 
 
 void calculateLF()
@@ -84,6 +86,23 @@ void counterRB() {
   roundCnt[RB]++;
 }
 
+void _LEFT(){
+  if (digitalRead(sensor_LO_pin))
+  {
+    St = TURN_LEFT;
+  }
+}
+void _RIGHT(){
+  if (digitalRead(sensor_RO_pin))
+  {
+    St = TURN_RIGHT;
+  }
+  
+}
+void _STRAIGHT(){
+  
+}
+
 void TimerHandler()
 {
   ISR_Timer.run();
@@ -114,7 +133,7 @@ void setup() {
   pinMode(sensor_RO_pin,OUTPUT);
   // attachInterrupt(sensor_LO_pin,counterLF,FALLING);
   attachInterrupt(sensor_LI_pin,counterRF,FALLING);
-  attachInterrupt(sensor_MID_pin,counterLB,FALLING);
+  // attachInterrupt(sensor_MID_pin,counterLB,FALLING);
   attachInterrupt(sensor_RI_pin,counterRB,FALLING);
   // attachInterrupt(sensor_RO_pin,counterRB,FALLING);
 
