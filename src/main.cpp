@@ -3,7 +3,7 @@
 #include "AutoPID.h"
 // #include "ATtiny_PWM.h"
 // #include "PWMServo.h"
-#include <fold.h>
+#include "fold.h"
 #include "config.h"
 #include "PIDconfig.h"
 #include "motorDriver.c"
@@ -44,7 +44,9 @@ MotorController motorController[4] = {
     .pin_E = RB_E_pin
   }
 };
-
+enum status {
+  TURN_LEFT, TURN_RIGHT, GO_STRAIGHT
+}
 
 
 void calculateLF()
@@ -96,22 +98,25 @@ void calcRUN()
 }
 
 void setup() {
+  //Init speed controller for each wheel
+  motorInit(motorController);
   //Init speed sensor
   attachInterrupt(LF_scanner_pin,counterLF,FALLING);
   attachInterrupt(RF_scanner_pin,counterRF,FALLING);
   attachInterrupt(LB_scanner_pin,counterLB,FALLING);
   attachInterrupt(RB_scanner_pin,counterRB,FALLING);
-  motorInit(motorController);
   analogWriteFrequency(7200);
-  //Init speed controller for each wheel
-
-
-
-
-
-
-
-
+  //init road scanner
+  pinMode(sensor_LO_pin,OUTPUT);
+  pinMode(sensor_LI_pin,OUTPUT);
+  pinMode(sensor_MID_pin,OUTPUT);
+  pinMode(sensor_RI_pin,OUTPUT);
+  pinMode(sensor_RO_pin,OUTPUT);
+  // attachInterrupt(sensor_LO_pin,counterLF,FALLING);
+  attachInterrupt(sensor_LI_pin,counterRF,FALLING);
+  attachInterrupt(sensor_MID_pin,counterLB,FALLING);
+  attachInterrupt(sensor_RI_pin,counterRB,FALLING);
+  // attachInterrupt(sensor_RO_pin,counterRB,FALLING);
 
 
 
@@ -123,6 +128,7 @@ void setup() {
   while (!ITimer.attachInterruptInterval(MS * 1000, TimerHandler))
   {
     continue;
+    //wait for pwm init
   }
   ISR_Timer.setInterval(500L,calcRUN);
 }

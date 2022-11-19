@@ -1,6 +1,5 @@
 #include <Arduino.h>
 
-
 #define LF_control_pin_A PB4
 #define RF_control_pin_A PA12
 #define LB_control_pin_A  PA9
@@ -19,4 +18,10 @@
 #define LF_scanner_pin PA3
 #define RF_scanner_pin PA4
 #define LB_scanner_pin PA5
-#define RB_scanner_pin PB6
+#define RB_scanner_pin PA6
+
+#define sensor_LO_pin PC14
+#define sensor_LI_pin PC15
+#define sensor_MID_pin PA0
+#define sensor_RI_pin PA1
+#define sensor_RO_pin PA2
