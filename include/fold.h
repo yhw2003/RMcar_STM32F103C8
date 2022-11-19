@@ -1,4 +1,4 @@
-#define dutyCycle(a) ((a) * 65536) / 100
+#define dutyCycle(a) ((a) * 255)
 #define LF 0
 #define RF 1
 #define LB 2
