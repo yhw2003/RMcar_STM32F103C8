@@ -3,12 +3,17 @@
 #include "AutoPID.h"
 // #include "ATtiny_PWM.h"
 // #include "PWMServo.h"
-#include "fold.h"
+#include <fold.h>
 #include "config.h"
 #include "PIDconfig.h"
+#include "motorDriver.c"
+
 #include "STM32TimerInterrupt.h"
 #include "STM32_ISR_Timer.h"
 #define MS 50
+
+
+
 
 const double targetSpeed = 100;
 double realDutyCycle[4] = {0.6,0.6,0.6,0.6};
@@ -16,12 +21,29 @@ int roundCnt[4] = {0};
 double speed[4] = {0};
 STM32Timer ITimer(TIM1);
 STM32_ISR_Timer ISR_Timer;
-
-// PWMServo ** speed_controllers;
-
-// auto timer  = timer_create_default();
-
 AutoPID ** PidController;
+MotorController motorController[4] = {
+  {
+    .pin_A = LF_control_pin_A,
+    .pin_B = LF_control_pin_B,
+    .pin_E = LF_E_pin
+  },
+  {
+    .pin_A = RF_control_pin_A,
+    .pin_B = RF_control_pin_B,
+    .pin_E = RF_E_pin
+  },
+  {
+    .pin_A = LB_control_pin_A,
+    .pin_B = LB_control_pin_B,
+    .pin_E = LB_E_pin
+  },
+  {
+    .pin_A = RB_control_pin_A,
+    .pin_B = RB_control_pin_B,
+    .pin_E = RB_E_pin
+  }
+};
 
 
 
@@ -79,12 +101,19 @@ void setup() {
   attachInterrupt(RF_scanner_pin,counterRF,FALLING);
   attachInterrupt(LB_scanner_pin,counterLB,FALLING);
   attachInterrupt(RB_scanner_pin,counterRB,FALLING);
-  pinMode(LF_E_pin,OUTPUT);
-  pinMode(RF_E_pin,OUTPUT);
-  pinMode(LB_E_pin,OUTPUT);
-  pinMode(RB_E_pin,OUTPUT);
+  motorInit(motorController);
   analogWriteFrequency(7200);
   //Init speed controller for each wheel
+
+
+
+
+
+
+
+
+
+
 
 
   for (size_t i = 0;!speed && i < 4; i++)

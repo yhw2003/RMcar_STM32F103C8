@@ -5,8 +5,8 @@ typedef struct _motorController
   int pin_E;
 } MotorController;
 
-
-void goFront(MotorController ** motorController);
-void goBack(MotorController ** motorController);
-void turnRight(MotorController ** motorController);
-void turnLeft(MotorController ** motorController);
+void motorInit(MotorController * motorController);
+void goFront(MotorController * motorController);
+void goBack(MotorController * motorController);
+void turnRight(MotorController * motorController);
+void turnLeft(MotorController * motorController);
