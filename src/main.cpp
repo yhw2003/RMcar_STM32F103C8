@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "arduino-timer.h"
 #include "AutoPID.h"
-#include "ATtiny_PWM.h"
+// #include "ATtiny_PWM.h"
 #include "fold.h"
 #include "config.h"
 #include "PIDconfig.h"
@@ -38,12 +38,10 @@ void setup() {
   attachInterrupt(RF_scanner_pin,counter,FALLING);
   attachInterrupt(LB_scanner_pin,counter,FALLING);
   attachInterrupt(RB_scanner_pin,counter,FALLING);
-  //init PID controller for each wheel
-  for (size_t i = 0; i < 4; i++)
-  {
-    speed_controllers[i] = new ATtiny_PWM(A0+i,1000.0f,dutyCycle(realDutyCycle));
-  }
-  
+  speed_controllers[LF] = new ATtiny_PWM(LF_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  speed_controllers[RF] = new ATtiny_PWM(RB_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  speed_controllers[LB] = new ATtiny_PWM(LB_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  speed_controllers[RB] = new ATtiny_PWM(RB_E_pin,1000.0f,dutyCycle(realDutyCycle));
   //Init speed controller for each wheel
   for (size_t i = 0; i < 4; i++)
   {
@@ -56,6 +54,13 @@ void loop() {
   {
     PidController[i]->run();
   }
+  {//update speed
+  speed_controllers[LF]->setPWM(LF_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  speed_controllers[RF]->setPWM(RF_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  speed_controllers[LB]->setPWM(LB_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  speed_controllers[RB]->setPWM(RB_E_pin,1000.0f,dutyCycle(realDutyCycle));
+  }
+  
 
   /*
   Other codes
