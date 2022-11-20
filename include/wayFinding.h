@@ -26,3 +26,4 @@ void goWest(position * POS);
 void goSouth(position * POS);
 void goNorth(position * POS);
 void fresh();
+step * getWAY(position * thisPOS, const position * target/* , step * lastStep */);

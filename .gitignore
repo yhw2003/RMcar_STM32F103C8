@@ -3,3 +3,9 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+
+include/test_wayFind
+
+include/test_wayFind.c
+
+include/.vscode/

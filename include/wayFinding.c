@@ -36,7 +36,7 @@ POINT_TYPE getPOINT(int x,int y)
 step * getWAY(position * thisPOS, const position * target/* , step * lastStep */)
 {
   //When attached flag 1. When go back, flag 2.
-  attached[thisPOS->x][thisPOS->y] = 1;
+  attached[thisPOS->y][thisPOS->x] = 1;
   //When found the target
   if (thisPOS->x+1 == target->x && thisPOS->y == thisPOS->y)
   {
@@ -77,7 +77,7 @@ step * getWAY(position * thisPOS, const position * target/* , step * lastStep */
   
 
 
-  if (getPOINT(thisPOS->x,thisPOS->y-1) == ROAD && attached[thisPOS->x][thisPOS->y-1] == 0)
+  if (getPOINT(thisPOS->x,thisPOS->y-1) == ROAD && attached[thisPOS->y-1][thisPOS->x] == 0)
   {
     goNorth(thisPOS);
     way[cnt].dx = 0;
@@ -85,7 +85,7 @@ step * getWAY(position * thisPOS, const position * target/* , step * lastStep */
     cnt++;
     return getWAY(thisPOS,target);
   }
-  if (getPOINT(thisPOS->x,thisPOS->y+1) == ROAD && attached[thisPOS->x][thisPOS->y+1] == 0)
+  if (getPOINT(thisPOS->x,thisPOS->y+1) == ROAD && attached[thisPOS->y+1][thisPOS->x] == 0)
   {
     goSouth(thisPOS);
     way[cnt].dx = 0;
@@ -93,7 +93,7 @@ step * getWAY(position * thisPOS, const position * target/* , step * lastStep */
     cnt++;
     return getWAY(thisPOS,target);
   }
-  if (getPOINT(thisPOS->x-1,thisPOS->y) == ROAD && attached[thisPOS->x-1][thisPOS->y] == 0)
+  if (getPOINT(thisPOS->x-1,thisPOS->y) == ROAD && attached[thisPOS->y][thisPOS->x-1] == 0)
   {
     goWest(thisPOS);
     way[cnt].dx = -1;
@@ -101,7 +101,7 @@ step * getWAY(position * thisPOS, const position * target/* , step * lastStep */
     cnt++;
     return getWAY(thisPOS,target);
   }
-  if (getPOINT(thisPOS->x+1,thisPOS->y) == ROAD && attached[thisPOS->x+1][thisPOS->y] == 0)
+  if (getPOINT(thisPOS->x+1,thisPOS->y) == ROAD && attached[thisPOS->y][thisPOS->x+1] == 0)
   {
     goEast(thisPOS);
     way[cnt].dx = +1;
@@ -111,32 +111,36 @@ step * getWAY(position * thisPOS, const position * target/* , step * lastStep */
   }
 
   //No direction to go
-  if (attached[thisPOS->x][thisPOS->y-1] == 1)
+  if (attached[thisPOS->y-1][thisPOS->x] == 1)
   {
-    attached[thisPOS->x][thisPOS->y-1] = 2;
+    attached[thisPOS->y-1][thisPOS->x] = 2;
     goNorth(thisPOS);
     cnt--;
+    return getWAY(thisPOS,target);
   }
-  if (attached[thisPOS->x][thisPOS->y+1] == 1)
+  if (attached[thisPOS->y+1][thisPOS->x] == 1)
   {
-    attached[thisPOS->x][thisPOS->y+1] = 2;
+    attached[thisPOS->y+1][thisPOS->x] = 2;
     goSouth(thisPOS);
     cnt--;
+    return getWAY(thisPOS,target);
   }
-  if (attached[thisPOS->x+1][thisPOS->y] == 1)
+  if (attached[thisPOS->y][thisPOS->x+1] == 1)
   {
-    attached[thisPOS->x+1][thisPOS->y] = 2;
+    attached[thisPOS->y][thisPOS->x+1] = 2;
     goEast(thisPOS);
     cnt--;
+    return getWAY(thisPOS,target);
   }
-  if (attached[thisPOS->x-1][thisPOS->y] == 1)
+  if (attached[thisPOS->y][thisPOS->x-1] == 1)
   {
-    attached[thisPOS->x-1][thisPOS->y] = 2;
+    attached[thisPOS->y][thisPOS->x-1] = 2;
     goWest(thisPOS);
     cnt--;
+    return getWAY(thisPOS,target);
   }
   //DFS
-  getWAY(thisPOS,target);
+  // getWAY(thisPOS,target);
 }
 
 
