@@ -14,8 +14,6 @@ POINT_TYPE map[9][12] =
   {STOP,       STOP,       STOP,       STOP,           STOP,       ROAD,          STOP,     STOP,          STOP,     STOP,           STOP,          STOP},//7
   {STOP,       STOP,       STOP,       STOP,           STOP,       ROAD,          ROAD,     ROAD,          ROAD,     ROAD,           ROAD,          MAIN_POINT}//8
 };
-//When attached flag 1. When go back, flag 2.
-int attached[9][12] = {0};
 
 position thisPOS = {
   .x = 6,
@@ -36,5 +34,8 @@ POINT_TYPE getPOINT(int x,int y)
 
 step * getWAY(const position * thisPOS, const position * target, step * lastStep)
 {
+  //When attached flag 1. When go back, flag 2.
+  int attached[9][12] = {0};
+  
 
 }
