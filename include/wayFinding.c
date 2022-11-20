@@ -126,7 +126,7 @@ step * getWAY(const position * thisPOS, const position * target, step * lastStep
     position tp = {
       .x = fp.x,
       .y = fp.y - 1 
-    };
+    };  
     way[cnt].dx = 0;
     way[cnt].dy = -1;
     getWAY(&tp,target,&way[cnt++]);
