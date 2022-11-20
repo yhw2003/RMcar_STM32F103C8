@@ -15,14 +15,14 @@ POINT_TYPE map[9][12] =
   {STOP,       STOP,       STOP,       STOP,           STOP,       ROAD,          ROAD,     ROAD,          ROAD,     ROAD,           ROAD,          MAIN_POINT}//8
 };
 
-position thisPOS = {
-  .x = 6,
-  .y = 4,
-};
-position target = {
-  .x = 0,
-  .y = 0,
-};
+// position thisPOS = {
+//   .x = 6,
+//   .y = 4,
+// };
+// position target = {
+//   .x = 0,
+//   .y = 0,
+// };
 
 int cnt = 0;
 step way[25] = {0};
@@ -32,10 +32,34 @@ POINT_TYPE getPOINT(int x,int y)
   return map[y][x];
 }
 
-step * getWAY(const position * thisPOS, const position * target, step * lastStep)
+step * getWAY(position * thisPOS, const position * target, step * lastStep)
 {
   //When attached flag 1. When go back, flag 2.
   int attached[9][12] = {0};
+  if (getPOINT(thisPOS->x,thisPOS->y-1) == ROAD && attached[thisPOS->x][thisPOS->y-1] == 0)
+  {
+    attached[thisPOS->x][thisPOS->y] = 1;
+    goNorth(thisPOS);
+  }
   
+}
 
+void goNorth(position * POS)
+{
+  POS->y -= 1;
+}
+
+void goSouth(position * POS)
+{
+  POS->y += 1;
+}
+
+void goWest(position * POS)
+{
+  POS->x -= 1;
+}
+
+void goEast(position * POS)
+{
+  POS->x += 1;
 }
