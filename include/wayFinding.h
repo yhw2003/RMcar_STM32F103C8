@@ -20,3 +20,9 @@ typedef struct _step
 int dx;
 int dy;
 } step;
+
+void goEast(position * POS);
+void goWest(position * POS);
+void goSouth(position * POS);
+void goNorth(position * POS);
+void fresh();

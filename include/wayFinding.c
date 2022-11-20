@@ -26,6 +26,7 @@ POINT_TYPE map[9][12] =
 
 int cnt = 0;
 step way[25] = {0};
+int attached[9][12] = {0};
 
 POINT_TYPE getPOINT(int x,int y)
 {
@@ -35,13 +36,51 @@ POINT_TYPE getPOINT(int x,int y)
 step * getWAY(position * thisPOS, const position * target, step * lastStep)
 {
   //When attached flag 1. When go back, flag 2.
-  int attached[9][12] = {0};
+  attached[thisPOS->x][thisPOS->y] = 1;
   if (getPOINT(thisPOS->x,thisPOS->y-1) == ROAD && attached[thisPOS->x][thisPOS->y-1] == 0)
   {
-    attached[thisPOS->x][thisPOS->y] = 1;
     goNorth(thisPOS);
+    way[cnt].dx = 0;
+    way[cnt].dy = -1;
+    cnt++;
+    return way;
   }
-  
+  if (getPOINT(thisPOS->x,thisPOS->y+1) == ROAD && attached[thisPOS->x][thisPOS->y+1] == 0)
+  {
+    goSouth(thisPOS);
+    way[cnt].dx = 0;
+    way[cnt].dy = +1;
+    cnt++;
+    return way;
+  }
+  if (getPOINT(thisPOS->x-1,thisPOS->y) == ROAD && attached[thisPOS->x-1][thisPOS->y] == 0)
+  {
+    goWest(thisPOS);
+    way[cnt].dx = -1;
+    way[cnt].dy = 0;
+    cnt++;
+    return way;
+  }
+  if (getPOINT(thisPOS->x+1,thisPOS->y) == ROAD && attached[thisPOS->x+1][thisPOS->y] == 0)
+  {
+    goEast(thisPOS);
+    way[cnt].dx = +1;
+    way[cnt].dy = 0;
+    cnt++;
+    return way;
+  }
+}
+
+void fresh()
+{
+  for (int i = 0; i < 9; i++)
+  {
+    for (int j = 0; j < 12; j++)
+    {
+      attached[i][i] = 0;
+    }
+    
+  }
 }
 
 void goNorth(position * POS)
