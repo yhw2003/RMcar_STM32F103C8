@@ -145,5 +145,5 @@ step * getWAY(const position * thisPOS, const position * target, step * lastStep
     }
     
   }
-  
+  ///That's a shit, i got given up.
 }
