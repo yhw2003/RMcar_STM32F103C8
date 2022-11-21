@@ -33,17 +33,57 @@ POINT_TYPE getPOINT(int x,int y)
   return map[y][x];
 }
 
-step * getWAY(position * thisPOS, const position * target, step * lastStep)
+step * getWAY(position * thisPOS, const position * target/* , step * lastStep */)
 {
   //When attached flag 1. When go back, flag 2.
   attached[thisPOS->x][thisPOS->y] = 1;
+  //When found the target
+  if (thisPOS->x+1 == target->x && thisPOS->y == thisPOS->y)
+  {
+    way[cnt].dx = 1;
+    way[cnt].dy = 0;
+    cnt++;
+    way[cnt].dy = EOF;
+    way[cnt].dx  =EOF;
+    return way;
+  }
+  if (thisPOS->x-1 == target->x && thisPOS->y == thisPOS->y)
+  {
+    way[cnt].dx = -1;
+    way[cnt].dy = 0;
+    cnt++;
+    way[cnt].dy = EOF;
+    way[cnt].dx  =EOF;
+    return way;
+  }
+  if (thisPOS->x == target->x && thisPOS->y+1 == thisPOS->y)
+  {
+    way[cnt].dx = 0;
+    way[cnt].dy = 1;
+    cnt++;
+    way[cnt].dy = EOF;
+    way[cnt].dx  =EOF;
+    return way;
+  }
+  if (thisPOS->x+1 == target->x && thisPOS->y-1 == thisPOS->y)
+  {
+    way[cnt].dx = 0;
+    way[cnt].dy = -1;
+    cnt++;
+    way[cnt].dy = EOF;
+    way[cnt].dx  =EOF;
+    return way;
+  }
+  
+
+
   if (getPOINT(thisPOS->x,thisPOS->y-1) == ROAD && attached[thisPOS->x][thisPOS->y-1] == 0)
   {
     goNorth(thisPOS);
     way[cnt].dx = 0;
     way[cnt].dy = -1;
     cnt++;
-    return way;
+    return getWAY(thisPOS,target);
   }
   if (getPOINT(thisPOS->x,thisPOS->y+1) == ROAD && attached[thisPOS->x][thisPOS->y+1] == 0)
   {
@@ -51,7 +91,7 @@ step * getWAY(position * thisPOS, const position * target, step * lastStep)
     way[cnt].dx = 0;
     way[cnt].dy = +1;
     cnt++;
-    return way;
+    return getWAY(thisPOS,target);
   }
   if (getPOINT(thisPOS->x-1,thisPOS->y) == ROAD && attached[thisPOS->x-1][thisPOS->y] == 0)
   {
@@ -59,7 +99,7 @@ step * getWAY(position * thisPOS, const position * target, step * lastStep)
     way[cnt].dx = -1;
     way[cnt].dy = 0;
     cnt++;
-    return way;
+    return getWAY(thisPOS,target);
   }
   if (getPOINT(thisPOS->x+1,thisPOS->y) == ROAD && attached[thisPOS->x+1][thisPOS->y] == 0)
   {
@@ -67,9 +107,38 @@ step * getWAY(position * thisPOS, const position * target, step * lastStep)
     way[cnt].dx = +1;
     way[cnt].dy = 0;
     cnt++;
-    return way;
+    return getWAY(thisPOS,target);
   }
+
+  //No direction to go
+  if (attached[thisPOS->x][thisPOS->y-1] == 1)
+  {
+    attached[thisPOS->x][thisPOS->y-1] = 2;
+    goNorth(thisPOS);
+    cnt--;
+  }
+  if (attached[thisPOS->x][thisPOS->y+1] == 1)
+  {
+    attached[thisPOS->x][thisPOS->y+1] = 2;
+    goSouth(thisPOS);
+    cnt--;
+  }
+  if (attached[thisPOS->x+1][thisPOS->y] == 1)
+  {
+    attached[thisPOS->x+1][thisPOS->y] = 2;
+    goEast(thisPOS);
+    cnt--;
+  }
+  if (attached[thisPOS->x-1][thisPOS->y] == 1)
+  {
+    attached[thisPOS->x-1][thisPOS->y] = 2;
+    goWest(thisPOS);
+    cnt--;
+  }
+  //DFS
+  getWAY(thisPOS,target);
 }
+
 
 void fresh()
 {
