@@ -200,17 +200,4 @@ void loop() {
   analogWrite(LB_E_pin,dutyCycle(realDutyCycle[LB]));
   analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
   }
-  {//update status
-/*    if (St == TURN_RIGHT)
-    {
-      turnRight(motorController,&degreeCnt);
-      St = GO_STRAIGHT;
-    }
-    if (St == TURN_LEFT)
-    {
-      turnLeft(motorController,&degreeCnt);
-      St = GO_STRAIGHT;
-    }
-*/
-  }
 }
