@@ -7,7 +7,7 @@
 #include "config.h"
 #include "PIDconfig.h"
 #include "motorDriver.c"
-
+#include "wayFinding.c"
 #include "STM32TimerInterrupt.h"
 #include "STM32_ISR_Timer.h"
 #define MS 50
@@ -51,6 +51,42 @@ enum status {
 
 enum status St = GO_STRAIGHT;
 
+position targets[8] = 
+{
+  {
+    .x = 11,
+    .y = 8
+  },
+  {//1号目标
+    .x = 1,
+    .y = 0
+  },
+  {//2号目标
+    .x = 3,
+    .y = 0
+  },
+  {//3号目标
+    .x = 5,
+    .y = 0
+  },
+  {//4号目标
+    .x = 7,
+    .y = 0
+  },
+  {//5号目标
+    .x = 9,
+    .y = 0
+  },
+  {//6号目标
+    .x = 11,
+    .y = 0
+  }
+};
+
+position startPOS = {
+  .x = 11,
+  .y = 8
+};
 
 void calculateLF()
 {
@@ -165,7 +201,7 @@ void loop() {
   analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
   }
   {//update status
-    if (St == TURN_RIGHT)
+/*    if (St == TURN_RIGHT)
     {
       turnRight(motorController,&degreeCnt);
       St = GO_STRAIGHT;
@@ -175,5 +211,6 @@ void loop() {
       turnLeft(motorController,&degreeCnt);
       St = GO_STRAIGHT;
     }
+*/
   }
 }

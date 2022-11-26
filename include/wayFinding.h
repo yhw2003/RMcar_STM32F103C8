@@ -6,7 +6,7 @@ typedef enum _POINT_TYPE {
 } POINT_TYPE;
 
 typedef enum _direct {
-  N, S, W, E
+  N, E, S, W
 } Direct;
 
 typedef struct _position
@@ -26,4 +26,4 @@ void goWest(position * POS);
 void goSouth(position * POS);
 void goNorth(position * POS);
 void fresh();
-step * getWAY(position * thisPOS, const position * target/* , step * lastStep */);
+step * getWAY(position * thisPOS, const position * target, step * way);
