@@ -187,6 +187,7 @@ void setup() {
     //wait for pwm init
   }
   ISR_Timer.setInterval(500L,calcRUN);
+  
 }
 
 void loop() {
@@ -195,9 +196,10 @@ void loop() {
     PidController[i]->run();
   }
   {//update speed
-  analogWrite(LF_E_pin,dutyCycle(realDutyCycle[LF]));
-  analogWrite(RF_E_pin,dutyCycle(realDutyCycle[RF]));
-  analogWrite(LB_E_pin,dutyCycle(realDutyCycle[LB]));
-  analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
+  analogWrite(LF_E_pin,128);
+  analogWrite(RF_E_pin,128);
+  analogWrite(LB_E_pin,128);
+  analogWrite(RB_E_pin,128);
   }
+  goFront(motorController);
 }

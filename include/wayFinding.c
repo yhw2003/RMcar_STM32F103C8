@@ -2,7 +2,7 @@
 
 
 
-POINT_TYPE map[9][12] = 
+POINT_TYPE _Map[9][12] = 
 { //0          //1         //2         //3             //4         //5            //6       //7            //8       //9             //10           //11
   {STOP,       MAIN_POINT, STOP,       MAIN_POINT,     STOP,       MAIN_POINT,    STOP,     MAIN_POINT,    STOP,     MAIN_POINT,     STOP,          MAIN_POINT},//0
   {STOP,       ROAD,       STOP,       ROAD,           STOP,       ROAD,          STOP,     ROAD,          STOP,     ROAD,           STOP,          ROAD},//1
@@ -30,7 +30,7 @@ int attached[9][12] = {0};
 
 POINT_TYPE getPOINT(int x,int y)
 {
-  return map[y][x];
+  return _Map[y][x];
 }
 
 step * getWAY(position * thisPOS, const position * target, step * way)//You should input a array with length between 25~30
