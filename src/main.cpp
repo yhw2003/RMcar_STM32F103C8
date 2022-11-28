@@ -161,7 +161,7 @@ void setup() {
   attachInterrupt(RF_scanner_pin,counterRF,FALLING);
   attachInterrupt(LB_scanner_pin,counterLB,FALLING);
   attachInterrupt(RB_scanner_pin,counterRB,FALLING);
-  analogWriteFrequency(7200);
+  analogWriteFrequency(14400);
   //init road scanner
   pinMode(sensor_LO_pin,OUTPUT);
   pinMode(sensor_LI_pin,OUTPUT);
@@ -191,15 +191,15 @@ void setup() {
 }
 
 void loop() {
-  for (size_t i = 0; i < 4; i++)//PID update
-  {
-    PidController[i]->run();
-  }
-  {//update speed
+  // for (size_t i = 0; i < 4; i++)//PID update
+  // {
+  //   PidController[i]->run();
+  // }
+  //update speed
   analogWrite(LF_E_pin,128);
   analogWrite(RF_E_pin,128);
   analogWrite(LB_E_pin,128);
   analogWrite(RB_E_pin,128);
-  }
+  
   goFront(motorController);
 }

@@ -43,8 +43,8 @@ step * getWAY(position * thisPOS, const position * target, step * way)//You shou
     way[cnt].dx = 1;
     way[cnt].dy = 0;
     cnt++;
-    way[cnt].dy = EOF;
-    way[cnt].dx  =EOF;
+    way[cnt].dy = ROF;
+    way[cnt].dx  =ROF;
     cnt = 0;
     return way;
   }
@@ -53,8 +53,8 @@ step * getWAY(position * thisPOS, const position * target, step * way)//You shou
     way[cnt].dx = -1;
     way[cnt].dy = 0;
     cnt++;
-    way[cnt].dy = EOF;
-    way[cnt].dx  =EOF;
+    way[cnt].dy = ROF;
+    way[cnt].dx  =ROF;
     cnt = 0;
     return way;
   }
@@ -63,8 +63,8 @@ step * getWAY(position * thisPOS, const position * target, step * way)//You shou
     way[cnt].dx = 0;
     way[cnt].dy = 1;
     cnt++;
-    way[cnt].dy = EOF;
-    way[cnt].dx  =EOF;
+    way[cnt].dy = ROF;
+    way[cnt].dx  =ROF;
     cnt = 0;
     return way;
   }
@@ -73,8 +73,8 @@ step * getWAY(position * thisPOS, const position * target, step * way)//You shou
     way[cnt].dx = 0;
     way[cnt].dy = -1;
     cnt++;
-    way[cnt].dy = EOF;
-    way[cnt].dx  =EOF;
+    way[cnt].dy = ROF;
+    way[cnt].dx  =ROF;
     cnt = 0;
     return way;
   }

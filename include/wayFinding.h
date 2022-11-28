@@ -1,8 +1,8 @@
-#define EOF -400
+#define ROF -400
 #define UnFind -401
 
 typedef enum _POINT_TYPE {
-  STOP, ROAD, MAIN_POINT,
+  STOP, ROAD, MAIN_POINT
 } POINT_TYPE;
 
 typedef enum _direct {
