@@ -1,3 +1,6 @@
+#ifndef _MOTORDRIVER_H_
+#define _MOTORDRIVER_H_
+
 typedef struct _motorController
 {
   int pin_A;
@@ -5,8 +8,10 @@ typedef struct _motorController
   int pin_E;
 } MotorController;
 
-void motorInit(MotorController * motorController);
-void goFront(MotorController * motorController);
-void goBack(MotorController * motorController);
-void turnRight(MotorController * motorController, int * degreeCnt);
-void turnLeft(MotorController * motorController, int * degreeCnt);
+extern void motorInit(MotorController * motorController);
+[[deprecated("Move directly instead of turning")]]extern void goFront(MotorController * motorController);
+[[deprecated("Move directly instead of turning")]]extern void goBack(MotorController * motorController);
+[[deprecated("Move directly instead of turning")]]extern void turnRight(MotorController * motorController, int * degreeCnt);
+[[deprecated("Move directly instead of turning")]]extern void turnLeft(MotorController * motorController, int * degreeCnt);
+
+#endif

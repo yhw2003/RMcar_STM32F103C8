@@ -1,3 +1,6 @@
+#ifndef _WAYFINDING_H_
+#define _WAYFINDING_H_
+
 #define ROF -400
 #define UnFind -401
 
@@ -27,3 +30,5 @@ void goSouth(position * POS);
 void goNorth(position * POS);
 void fresh();
 step * getWAY(position * thisPOS, const position * target, step * way);
+
+#endif

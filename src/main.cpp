@@ -45,11 +45,6 @@ MotorController motorController[4] = {
     .pin_E = RB_E_pin
   }
 };
-enum status {
-  TURN_LEFT, TURN_RIGHT, GO_STRAIGHT
-};
-
-enum status St = GO_STRAIGHT;
 
 position targets[8] = 
 {
@@ -123,22 +118,6 @@ void counterRB() {
   roundCnt[RB]++;
 }
 
-void _LEFT(){
-  if (digitalRead(sensor_LO_pin))
-  {
-    St = TURN_LEFT;
-  }
-}
-void _RIGHT(){
-  if (digitalRead(sensor_RO_pin))
-  {
-    St = TURN_RIGHT;
-  }
-  
-}
-void _STRAIGHT(){
-  St = GO_STRAIGHT;
-}
 
 void TimerHandler()
 {
@@ -168,12 +147,6 @@ void setup() {
   pinMode(sensor_MID_pin,OUTPUT);
   pinMode(sensor_RI_pin,OUTPUT);
   pinMode(sensor_RO_pin,OUTPUT);
-  // attachInterrupt(sensor_LO_pin,counterLF,FALLING);
-  attachInterrupt(sensor_LI_pin,_LEFT,FALLING);
-  // attachInterrupt(sensor_MID_pin,counterLB,FALLING);
-  attachInterrupt(sensor_RI_pin,_RIGHT,FALLING);
-  // attachInterrupt(sensor_RO_pin,counterRB,FALLING);
-
 
 
 
@@ -191,15 +164,15 @@ void setup() {
 }
 
 void loop() {
-  // for (size_t i = 0; i < 4; i++)//PID update
-  // {
-  //   PidController[i]->run();
-  // }
+  for (size_t i = 0; i < 4; i++)//PID update
+  {
+    PidController[i]->run();
+  }
   //update speed
-  analogWrite(LF_E_pin,128);
-  analogWrite(RF_E_pin,128);
-  analogWrite(LB_E_pin,128);
-  analogWrite(RB_E_pin,128);
-  
-  goFront(motorController);
+  analogWrite(LF_E_pin,dutyCycle(realDutyCycle[LF]));
+  analogWrite(RF_E_pin,dutyCycle(realDutyCycle[RF]));
+  analogWrite(LB_E_pin,dutyCycle(realDutyCycle[LB]));
+  analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
+
+  //update state
 }
