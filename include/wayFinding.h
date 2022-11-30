@@ -1,8 +1,11 @@
-#define EOF -400
+#ifndef _WAYFINDING_H_
+#define _WAYFINDING_H_
+
+#define ROF -400
 #define UnFind -401
 
 typedef enum _POINT_TYPE {
-  STOP, ROAD, MAIN_POINT,
+  STOP, ROAD, MAIN_POINT
 } POINT_TYPE;
 
 typedef enum _direct {
@@ -27,3 +30,5 @@ void goSouth(position * POS);
 void goNorth(position * POS);
 void fresh();
 step * getWAY(position * thisPOS, const position * target, step * way);
+
+#endif

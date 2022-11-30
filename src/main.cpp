@@ -45,11 +45,6 @@ MotorController motorController[4] = {
     .pin_E = RB_E_pin
   }
 };
-enum status {
-  TURN_LEFT, TURN_RIGHT, GO_STRAIGHT
-};
-
-enum status St = GO_STRAIGHT;
 
 position targets[8] = 
 {
@@ -123,22 +118,6 @@ void counterRB() {
   roundCnt[RB]++;
 }
 
-void _LEFT(){
-  if (digitalRead(sensor_LO_pin))
-  {
-    St = TURN_LEFT;
-  }
-}
-void _RIGHT(){
-  if (digitalRead(sensor_RO_pin))
-  {
-    St = TURN_RIGHT;
-  }
-  
-}
-void _STRAIGHT(){
-  St = GO_STRAIGHT;
-}
 
 void TimerHandler()
 {
@@ -161,19 +140,13 @@ void setup() {
   attachInterrupt(RF_scanner_pin,counterRF,FALLING);
   attachInterrupt(LB_scanner_pin,counterLB,FALLING);
   attachInterrupt(RB_scanner_pin,counterRB,FALLING);
-  analogWriteFrequency(7200);
+  analogWriteFrequency(14400);
   //init road scanner
   pinMode(sensor_LO_pin,OUTPUT);
   pinMode(sensor_LI_pin,OUTPUT);
   pinMode(sensor_MID_pin,OUTPUT);
   pinMode(sensor_RI_pin,OUTPUT);
   pinMode(sensor_RO_pin,OUTPUT);
-  // attachInterrupt(sensor_LO_pin,counterLF,FALLING);
-  attachInterrupt(sensor_LI_pin,_LEFT,FALLING);
-  // attachInterrupt(sensor_MID_pin,counterLB,FALLING);
-  attachInterrupt(sensor_RI_pin,_RIGHT,FALLING);
-  // attachInterrupt(sensor_RO_pin,counterRB,FALLING);
-
 
 
 
@@ -187,6 +160,7 @@ void setup() {
     //wait for pwm init
   }
   ISR_Timer.setInterval(500L,calcRUN);
+  
 }
 
 void loop() {
@@ -194,10 +168,11 @@ void loop() {
   {
     PidController[i]->run();
   }
-  {//update speed
+  //update speed
   analogWrite(LF_E_pin,dutyCycle(realDutyCycle[LF]));
   analogWrite(RF_E_pin,dutyCycle(realDutyCycle[RF]));
   analogWrite(LB_E_pin,dutyCycle(realDutyCycle[LB]));
   analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
-  }
+
+  //update state
 }

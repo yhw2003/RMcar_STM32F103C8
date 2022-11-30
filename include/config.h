@@ -1,3 +1,6 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H
+
 #include <Arduino.h>
 
 #define LF_control_pin_A PB4
@@ -25,3 +28,5 @@
 #define sensor_MID_pin PA0
 #define sensor_RI_pin PA1
 #define sensor_RO_pin PA2
+
+#endif
