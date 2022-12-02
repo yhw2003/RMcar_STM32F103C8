@@ -154,6 +154,8 @@ void setup() {
 
 void loop() {
   //update speed
+  delay(500);
+  goNorth(motorController);
 if (down == 0 && _St == N)
 {
   delay(500);
