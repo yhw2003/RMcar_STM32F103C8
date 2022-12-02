@@ -11,7 +11,7 @@ typedef struct _motorController
 extern void motorInit(MotorController * motorController);
 [[deprecated("Move directly instead of turning")]]extern void goFront(MotorController * motorController);
 [[deprecated("Move directly instead of turning")]]extern void goBack(MotorController * motorController);
-[[deprecated("Move directly instead of turning")]]extern void turnRight(MotorController * motorController, int * degreeCnt);
-[[deprecated("Move directly instead of turning")]]extern void turnLeft(MotorController * motorController, int * degreeCnt);
+[[deprecated("Move directly instead of turning")]]extern void turnRight(MotorController * motorController);
+[[deprecated("Move directly instead of turning")]]extern void turnLeft(MotorController * motorController);
 
 #endif

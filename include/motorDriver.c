@@ -50,15 +50,15 @@ void goSouth(MotorController * motorController)
 void goEast(MotorController * motorController)
 {
   stopHere(motorController);
-  digitalWrite(motorController[LF].pin_A, LOW);
-  digitalWrite(motorController[LF].pin_B, HIGH);
-  digitalWrite(motorController[RF].pin_A, LOW);
-  digitalWrite(motorController[RF].pin_E, HIGH);
-  
-  digitalWrite(motorController[LB].pin_A, HIGH);
-  digitalWrite(motorController[LB].pin_B, LOW);
+  digitalWrite(motorController[LB].pin_A, LOW);
+  digitalWrite(motorController[LB].pin_B, HIGH);
   digitalWrite(motorController[RB].pin_A, HIGH);
-  digitalWrite(motorController[LB].pin_B, LOW);
+  digitalWrite(motorController[RB].pin_B, LOW);
+  
+  digitalWrite(motorController[LF].pin_A, HIGH);
+  digitalWrite(motorController[LF].pin_B, LOW);
+  digitalWrite(motorController[RF].pin_A, LOW);
+  digitalWrite(motorController[RF].pin_B, HIGH);
 }
 
 void goWest(MotorController * motorController)
@@ -66,13 +66,13 @@ void goWest(MotorController * motorController)
   stopHere(motorController);
   digitalWrite(motorController[LB].pin_A, LOW);
   digitalWrite(motorController[LB].pin_B, HIGH);
-  digitalWrite(motorController[RB].pin_A, LOW);
-  digitalWrite(motorController[RB].pin_E, HIGH);
+  digitalWrite(motorController[RB].pin_A, HIGH);
+  digitalWrite(motorController[RB].pin_B, LOW);
   
   digitalWrite(motorController[LF].pin_A, HIGH);
   digitalWrite(motorController[LF].pin_B, LOW);
-  digitalWrite(motorController[RF].pin_A, HIGH);
-  digitalWrite(motorController[RF].pin_B, LOW);
+  digitalWrite(motorController[RF].pin_A, LOW);
+  digitalWrite(motorController[RF].pin_B, HIGH);
 }
 
 void goFront(MotorController * motorController)//north
@@ -94,9 +94,8 @@ void goBack(MotorController * motorController)
   }
 }
 
-void turnLeft(MotorController * motorController, int * degreeCnt)
+void turnRight(MotorController * motorController)
 {
-  *degreeCnt = 0;
   digitalWrite(motorController[LF].pin_A,LOW);
   digitalWrite(motorController[LF].pin_B,HIGH);
   digitalWrite(motorController[LB].pin_A,LOW);
@@ -105,13 +104,12 @@ void turnLeft(MotorController * motorController, int * degreeCnt)
   digitalWrite(motorController[RF].pin_B,LOW);
   digitalWrite(motorController[RB].pin_A,HIGH);
   digitalWrite(motorController[RB].pin_B,LOW);
-  while (*degreeCnt >= degree(90)){continue;}
-  goFront(motorController);
+  delay(150);
+  goNorth(motorController);
 }
 
-void turnRight(MotorController * motorController, int * degreeCnt)
+void turnLeft(MotorController * motorController)
 {
-  *degreeCnt = 0;
   digitalWrite(motorController[RF].pin_A,LOW);
   digitalWrite(motorController[RF].pin_B,HIGH);
   digitalWrite(motorController[RB].pin_A,LOW);
@@ -120,6 +118,6 @@ void turnRight(MotorController * motorController, int * degreeCnt)
   digitalWrite(motorController[LF].pin_B,LOW);
   digitalWrite(motorController[LB].pin_A,HIGH);
   digitalWrite(motorController[LB].pin_B,LOW);
-  while (*degreeCnt >= degree(90)){continue;}
-  goFront(motorController);
+  delay(150);
+  goNorth(motorController);
 }

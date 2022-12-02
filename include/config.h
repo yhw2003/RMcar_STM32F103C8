@@ -18,12 +18,19 @@
 #define LB_E_pin PA8
 #define RB_E_pin PB13
 
+
 #define LF_scanner_pin PA3
 #define RF_scanner_pin PA4
 #define LB_scanner_pin PA5
 #define RB_scanner_pin PA6
 
-#define sensor_pin PA2
+#define L_E PA4
+#define R_E PA5
+
+
+#define sensor_pin_A PA2
+#define sensor_pin_B PA3
+#define sensor_MID_pin PA1
 #define OUTPUT_pin PA0
 #define GET_pin PA1
 

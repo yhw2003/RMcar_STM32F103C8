@@ -14,21 +14,29 @@
 
 _Bool down = 0;
 
-Direct _St = N;
+_Bool sL = 0;
+_Bool sR = 0;
 
-void le()
+void leL()
 {
-  _St = S;
+  sL = 1;
 }
 
-const double targetSpeed = 100;
-double realDutyCycle[4] = {0.6,0.6,0.6,0.6};
-int roundCnt[4] = {0};
-int degreeCnt = 0;
-double speed[4] = {0};
-STM32Timer ITimer(TIM1);
-STM32_ISR_Timer ISR_Timer;
-AutoPID ** PidController;
+void leR()
+{
+  sR = 1;
+}
+
+void leLu()
+{
+  sL = 0;
+}
+
+void leRu()
+{
+  sR = 0;
+}
+
 MotorController motorController[4] = {
   {
     .pin_A = LF_control_pin_A,
@@ -52,90 +60,18 @@ MotorController motorController[4] = {
   }
 };
 
-position targets[8] = 
+int St = 0;
+void TR()
 {
-  {
-    .x = 11,
-    .y = 8
-  },
-  {//1号目标
-    .x = 1,
-    .y = 0
-  },
-  {//2号目标
-    .x = 3,
-    .y = 0
-  },
-  {//3号目标
-    .x = 5,
-    .y = 0
-  },
-  {//4号目标
-    .x = 7,
-    .y = 0
-  },
-  {//5号目标
-    .x = 9,
-    .y = 0
-  },
-  {//6号目标
-    .x = 11,
-    .y = 0
+  if (St == 0){
+  turnRight(motorController);
   }
-};
-
-position startPOS = {
-  .x = 11,
-  .y = 8
-};
-
-void calculateLF()
+}
+void TL()
 {
-  speed[LF] = roundCnt[LF]/0.5;
-  roundCnt[LF] = 0;
-}
-void calculateLB()
-{
-  speed[LB] = roundCnt[LB]/0.5;
-  roundCnt[LB] = 0;
-}
-void calculateRF()
-{
-  speed[RF] = roundCnt[RF]/0.5;
-  roundCnt[RF] = 0;
-}
-void calculateRB()
-{
-  speed[RB] = roundCnt[RB]/0.5;
-  roundCnt[RB] = 0;
-}
-
-
-void counterLF() {
-  roundCnt[LF]++;
-}
-void counterRF() {
-  roundCnt[RF]++;
-}
-void counterLB() {
-  roundCnt[LB]++;
-}
-void counterRB() {
-  roundCnt[RB]++;
-}
-
-
-void TimerHandler()
-{
-  ISR_Timer.run();
-}
-
-void calcRUN()
-{
-  calculateLF();
-  calculateLB();
-  calculateRF();
-  calculateRB();
+  if (St == 0){
+  turnLeft(motorController);
+  }
 }
 
 void setup() {
@@ -143,40 +79,59 @@ void setup() {
   motorInit(motorController);
   //Init speed sensor
   //init road scanner
-  pinMode(sensor_pin, INPUT);
+  pinMode(sensor_pin_A, INPUT);
+  pinMode(sensor_pin_B, INPUT);
+  pinMode(L_E, INPUT);
+  pinMode(R_E, INPUT);
   pinMode(OUTPUT_pin, OUTPUT);
   pinMode(GET_pin, INPUT_PULLDOWN);
-  attachInterrupt(sensor_pin, le, RISING);
+  attachInterrupt(sensor_pin_A, leL, RISING);
+  attachInterrupt(sensor_pin_B, leR, RISING);
+  // attachInterrupt(sensor_pin_A, leLu, FALLING);
+  // attachInterrupt(sensor_pin_B, leRu, FALLING);
+  attachInterrupt(L_E, TR, RISING);
+  attachInterrupt(R_E, TL, RISING);
   digitalWrite(OUTPUT_pin, LOW);
   stopHere(motorController);
-  
+  analogWriteFrequency(50);
+  for (int i = 0; i < 4; i++)
+  {
+  analogWrite(motorController[i].pin_E, 200);
+  }
 }
+
+_Bool started = 0;
 
 void loop() {
   //update speed
-  delay(500);
-  goNorth(motorController);
-if (down == 0 && _St == N)
-{
-  delay(500);
-  goNorth(motorController);
-} else if (_St == S)
-{
-  goWest(motorController);
-  delay(500);
-  goNorth(motorController);
-  delay(200);
-  stopHere(motorController);
-  digitalWrite(OUTPUT_pin, HIGH);
-  while (!digitalRead(GET_pin));
-  goSouth(motorController);
-  delay(200);
-  goEast(motorController);
-  delay(1000);
-  goNorth(motorController);
-  delay(3000);
-  
-}
+  if (!started)
+  {
+    started = 1;
+    delay(500);
+  }
+  if (St == 0)
+  {
+    if (down == 0 && sL == 0 && sR == 0)
+    {
+      goNorth(motorController);
+    } else if (sL == 1 && sR == 1)
+    {
+      goNorth(motorController);
+      St = 1;
+      if (down == 0) {
+      delay(800);
+      }
+      stopHere(motorController);
+      digitalWrite(OUTPUT_pin, HIGH);
+      while (!digitalRead(GET_pin));
+      goEast(motorController);
+      while (digitalRead(sensor_MID_pin));
+      sL = 0;
+      sR = 0;
+      goNorth(motorController);
+      down = 1;
+    }
+  }
 
 
   //update state
