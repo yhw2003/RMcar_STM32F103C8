@@ -5,7 +5,7 @@
 
 #define LF_control_pin_A PB4
 #define RF_control_pin_A PA12
-#define LB_control_pin_A  PA9
+#define LB_control_pin_A PA9
 #define RB_control_pin_A PB14
 
 #define LF_control_pin_B PA15

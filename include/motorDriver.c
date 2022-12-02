@@ -12,6 +12,7 @@ void motorInit(MotorController * motorController)
     pinMode(motorController[i].pin_A,OUTPUT);
     pinMode(motorController[i].pin_B,OUTPUT);
     pinMode(motorController[i].pin_E,OUTPUT);
+    digitalWrite(motorController[i].pin_E,HIGH);
   }
   
 }
