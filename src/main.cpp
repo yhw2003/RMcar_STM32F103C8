@@ -8,8 +8,6 @@
 #include "PIDconfig.h"
 #include "motorDriver.c"
 #include "wayFinding.c"
-#include "STM32TimerInterrupt.h"
-#include "STM32_ISR_Timer.h"
 #define MS 50
 
 _Bool down = 0;
@@ -119,13 +117,13 @@ void loop() {
       goNorth(motorController);
       St = 1;
       if (down == 0) {
-      delay(800);
-      }
-      stopHere(motorController);
-      digitalWrite(OUTPUT_pin, HIGH);
-      while (!digitalRead(GET_pin));
+      delay(700);
+      }//
+      stopHere(motorController);//
+      digitalWrite(OUTPUT_pin, HIGH);//
+      while (!digitalRead(GET_pin));//
       goEast(motorController);
-      while (digitalRead(sensor_MID_pin));
+      while (!digitalRead(sensor_MID_pin));
       sL = 0;
       sR = 0;
       goNorth(motorController);
