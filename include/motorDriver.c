@@ -16,8 +16,19 @@ void motorInit(MotorController * motorController)
   
 }
 
+void stopHere(MotorController * motorController)
+{
+  for (int i = 0; i < 4; i++)
+  {
+    digitalWrite(motorController[i].pin_A, LOW);
+    digitalWrite(motorController[i].pin_B, LOW);
+  }
+  
+}
+
 void goNorth(MotorController * motorController)//north
 {
+  stopHere(motorController);
   for (size_t i = 0; i < 4; i++)
   {
     digitalWrite(motorController[i].pin_A,HIGH);
@@ -27,6 +38,7 @@ void goNorth(MotorController * motorController)//north
 
 void goSouth(MotorController * motorController)
 {
+  stopHere(motorController);
   for (size_t i = 0; i < 4; i++)
   {
   digitalWrite(motorController[i].pin_A,LOW);
@@ -36,6 +48,7 @@ void goSouth(MotorController * motorController)
 
 void goEast(MotorController * motorController)
 {
+  stopHere(motorController);
   digitalWrite(motorController[LF].pin_A, LOW);
   digitalWrite(motorController[LF].pin_B, HIGH);
   digitalWrite(motorController[RF].pin_A, LOW);
@@ -49,6 +62,7 @@ void goEast(MotorController * motorController)
 
 void goWest(MotorController * motorController)
 {
+  stopHere(motorController);
   digitalWrite(motorController[LB].pin_A, LOW);
   digitalWrite(motorController[LB].pin_B, HIGH);
   digitalWrite(motorController[RB].pin_A, LOW);

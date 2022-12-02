@@ -12,8 +12,14 @@
 #include "STM32_ISR_Timer.h"
 #define MS 50
 
+_Bool down = 0;
 
+Direct _St = N;
 
+void le()
+{
+  _St = S;
+}
 
 const double targetSpeed = 100;
 double realDutyCycle[4] = {0.6,0.6,0.6,0.6};
@@ -136,43 +142,41 @@ void setup() {
   //Init speed controller for each wheel
   motorInit(motorController);
   //Init speed sensor
-  attachInterrupt(LF_scanner_pin,counterLF,FALLING);
-  attachInterrupt(RF_scanner_pin,counterRF,FALLING);
-  attachInterrupt(LB_scanner_pin,counterLB,FALLING);
-  attachInterrupt(RB_scanner_pin,counterRB,FALLING);
-  analogWriteFrequency(14400);
   //init road scanner
-  pinMode(sensor_LO_pin,OUTPUT);
-  pinMode(sensor_LI_pin,OUTPUT);
-  pinMode(sensor_MID_pin,OUTPUT);
-  pinMode(sensor_RI_pin,OUTPUT);
-  pinMode(sensor_RO_pin,OUTPUT);
-
-
-
-  for (size_t i = 0;!speed && i < 4; i++)
-  {
-    PidController[i] = new AutoPID(&speed[i],(double *)&targetSpeed,&realDutyCycle[i],0.0,1.0,Ki,Kp,Kd);
-  }
-  while (!ITimer.attachInterruptInterval(MS * 1000, TimerHandler))
-  {
-    continue;
-    //wait for pwm init
-  }
-  ISR_Timer.setInterval(500L,calcRUN);
+  pinMode(sensor_pin, INPUT);
+  pinMode(OUTPUT_pin, OUTPUT);
+  pinMode(GET_pin, INPUT_PULLDOWN);
+  attachInterrupt(sensor_pin, le, RISING);
+  digitalWrite(OUTPUT_pin, LOW);
+  stopHere(motorController);
   
 }
 
 void loop() {
-  for (size_t i = 0; i < 4; i++)//PID update
-  {
-    PidController[i]->run();
-  }
   //update speed
-  analogWrite(LF_E_pin,dutyCycle(realDutyCycle[LF]));
-  analogWrite(RF_E_pin,dutyCycle(realDutyCycle[RF]));
-  analogWrite(LB_E_pin,dutyCycle(realDutyCycle[LB]));
-  analogWrite(RB_E_pin,dutyCycle(realDutyCycle[RB]));
+if (down == 0 && _St == N)
+{
+  delay(500);
+  goNorth(motorController);
+} else if (_St == S)
+{
+  goWest(motorController);
+  delay(500);
+  goNorth(motorController);
+  delay(200);
+  stopHere(motorController);
+  digitalWrite(OUTPUT_pin, HIGH);
+  while (!digitalRead(GET_pin));
+  goSouth(motorController);
+  delay(200);
+  goEast(motorController);
+  delay(1000);
+  goNorth(motorController);
+  delay(3000);
+  
+}
+
 
   //update state
+
 }

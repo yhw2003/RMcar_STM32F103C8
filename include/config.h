@@ -10,7 +10,7 @@
 
 #define LF_control_pin_B PA15
 #define RF_control_pin_B PA10
-#define LB_control_pin_B PB14
+#define LB_control_pin_B PB15
 #define RB_control_pin_B PB12
 
 #define LF_E_pin PB3
@@ -23,10 +23,9 @@
 #define LB_scanner_pin PA5
 #define RB_scanner_pin PA6
 
-#define sensor_LO_pin PC14
-#define sensor_LI_pin PC15
-#define sensor_MID_pin PA0
-#define sensor_RI_pin PA1
-#define sensor_RO_pin PA2
+#define sensor_pin PA2
+#define OUTPUT_pin PA0
+#define GET_pin PA1
+
 
 #endif
