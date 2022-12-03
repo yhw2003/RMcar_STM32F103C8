@@ -104,7 +104,7 @@ void turnRight(MotorController * motorController)
   digitalWrite(motorController[RF].pin_B,LOW);
   digitalWrite(motorController[RB].pin_A,HIGH);
   digitalWrite(motorController[RB].pin_B,LOW);
-  delay(150);
+  delay(200);
   goNorth(motorController);
 }
 
@@ -118,6 +118,6 @@ void turnLeft(MotorController * motorController)
   digitalWrite(motorController[LF].pin_B,LOW);
   digitalWrite(motorController[LB].pin_A,HIGH);
   digitalWrite(motorController[LB].pin_B,LOW);
-  delay(150);
+  delay(200);
   goNorth(motorController);
 }

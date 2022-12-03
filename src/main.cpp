@@ -83,13 +83,13 @@ void setup() {
   pinMode(R_E, INPUT);
   pinMode(OUTPUT_pin, OUTPUT);
   pinMode(GET_pin, INPUT_PULLDOWN);
+  digitalWrite(OUTPUT_pin, HIGH);
   attachInterrupt(sensor_pin_A, leL, RISING);
   attachInterrupt(sensor_pin_B, leR, RISING);
   // attachInterrupt(sensor_pin_A, leLu, FALLING);
   // attachInterrupt(sensor_pin_B, leRu, FALLING);
   attachInterrupt(L_E, TR, RISING);
   attachInterrupt(R_E, TL, RISING);
-  digitalWrite(OUTPUT_pin, LOW);
   stopHere(motorController);
   analogWriteFrequency(50);
   for (int i = 0; i < 4; i++)
@@ -104,8 +104,11 @@ void loop() {
   //update speed
   if (!started)
   {
+    goNorth(motorController);
     started = 1;
-    delay(500);
+    delay(1000);
+    sL = 0;
+    sR = 0;
   }
   if (St == 0)
   {
@@ -120,8 +123,9 @@ void loop() {
       delay(700);
       }//
       stopHere(motorController);//
-      digitalWrite(OUTPUT_pin, HIGH);//
+      // digitalWrite(OUTPUT_pin, LOW);//
       while (!digitalRead(GET_pin));//
+      delay(10000);
       goEast(motorController);
       while (!digitalRead(sensor_MID_pin));
       sL = 0;

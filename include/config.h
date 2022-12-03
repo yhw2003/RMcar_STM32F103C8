@@ -27,11 +27,10 @@
 #define L_E PA4
 #define R_E PA5
 
-
 #define sensor_pin_A PA2
 #define sensor_pin_B PA3
 #define sensor_MID_pin PA6
-#define OUTPUT_pin PA0
+#define OUTPUT_pin PC15
 #define GET_pin PA1
 
 
